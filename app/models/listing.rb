@@ -1,6 +1,10 @@
 class Listing < ActiveRecord::Base
-  has_attached_file :image, :styles => { :medium => "250x>" , :thumb => "150x150" }  , :default_url => "missing.png"
-validates_attachment :image, :content_type => { :content_type => ["image/jpg", "image/gif", "image/png"] }
+  has_attached_file :image, :styles => { :medium => "250x>" , :thumb => "150x150" }  , :default_url => "missing.png",
+		:storage => :dropbox,
+    	:dropbox_credentials => Rails.root.join("config/dropbox.yml")
+
+		validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+	   		
 end
 
 #["image/jpg", "image/gif", "image/png"]
@@ -17,3 +21,6 @@ end
 
   #other version
 #validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/ 
+#Dropbox
+#
+#
